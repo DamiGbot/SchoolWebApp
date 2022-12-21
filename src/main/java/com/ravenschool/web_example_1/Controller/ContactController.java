@@ -11,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.logging.Logger;
 
 @Controller
+@RequestMapping(value = {"/contact"})
 public class ContactController {
 
     private final Logger log = Logger.getLogger(ContactController.class.getName());
@@ -21,7 +22,7 @@ public class ContactController {
         this.contactService = contactService;
     }
 
-    @RequestMapping(value = {"/contact"})
+    @RequestMapping(value = {""})
     public String displayContactPage() {
         return "contact.html";
     }
