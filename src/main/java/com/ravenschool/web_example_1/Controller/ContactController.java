@@ -2,20 +2,20 @@ package com.ravenschool.web_example_1.Controller;
 
 import com.ravenschool.web_example_1.Model.Contact;
 import com.ravenschool.web_example_1.service.ContactService;
+import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
-
-import java.util.logging.Logger;
 
 @Controller
 @RequestMapping(value = {"/contact"})
+@Slf4j
 public class ContactController {
-
-    private final Logger log = Logger.getLogger(ContactController.class.getName());
-    private ContactService contactService;
+    private final ContactService contactService;
 
     @Autowired
     public ContactController(ContactService contactService) {
@@ -23,13 +23,19 @@ public class ContactController {
     }
 
     @RequestMapping(value = {""})
-    public String displayContactPage() {
+    public String displayContactPage(Model model) {
+        model.addAttribute("contact", new Contact());
         return "contact.html";
     }
 
     @PostMapping(value = {"/saveMsg"})
-    public ModelAndView SaveMessage(Contact contact) {
+    public String SaveMessage(@Valid Contact contact, Errors errors) {
+        if (errors.hasErrors()) {
+            log.error("Contact form validation failed due to: " + errors);
+            return "contact.html";
+        }
+
         contactService.saveMessageDetails(contact);
-        return new ModelAndView("redirect:/contact");
+        return "redirect:/contact";
     }
 }

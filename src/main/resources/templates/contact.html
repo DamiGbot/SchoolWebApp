@@ -13,7 +13,7 @@ Author URL: http://w3layouts.com
     <!-- Google fonts -->
     <link href="//fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap" rel="stylesheet">
     <!-- Template CSS Style link -->
-    <link rel="stylesheet" href="assets/css/style-starter.css">
+    <link rel="stylesheet" href="/assets/css/style-starter.css">
 </head>
 
 <body>
@@ -45,26 +45,41 @@ Author URL: http://w3layouts.com
             </div>
             <div class="row contact-block">
                 <div class="col-md-7 contact-right">
-                    <form th:action="@{/contact/saveMsg}" method="post" class="signin-form">
+                    <form th:action="@{/contact/saveMsg}" method="post" class="signin-form" th:object="${contact}">
                         <div class="input-grids">
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <input type="text" name="name" id="name" placeholder="Your Name"
+                                    <input type="text" th:field="*{name}" id="name" placeholder="Your Name" required
                                         class="contact-input" />
+                                    <ul>
+                                        <li class="alert alert-danger" th:each="err : ${#fields.errors('name')}" th:text="${err}" ></li>
+                                    </ul>
                                 </div>
                                 <div class="col-sm-6">
-                                    <input type="text" name="mobileNum" id="mobileNum" placeholder="Your Mobile Number"
+                                    <input type="text" th:field="*{mobileNum}" id="mobileNum" placeholder="Your Mobile Number" required
                                         class="contact-input" />
+                                    <ul>
+                                        <li class="alert alert-danger" th:each="err : ${#fields.errors('mobileNum')}" th:text="${err}" ></li>
+                                    </ul>
                                 </div>
                             </div>
-                            <input type="text" name="email" id="email" placeholder="Your Email"
+                            <input type="email" th:field="*{email}" id="email" placeholder="Your Email" required
                                 class="contact-input" />
-                            <input type="text" name="subject" id="subject" placeholder="Subject"
+                            <ul>
+                                <li class="alert alert-danger" th:each="err : ${#fields.errors('email')}" th:text="${err}" ></li>
+                            </ul>
+                            <input type="text" th:field="*{subject}" id="subject" placeholder="Subject" required
                                 class="contact-input" />
+                            <ul>
+                                <li class="alert alert-danger" th:each="err : ${#fields.errors('subject')}" th:text="${err}" ></li>
+                            </ul>
                         </div>
                         <div class="form-input">
-                            <textarea name="message" id="message" placeholder="Type your message here"></textarea>
-                        </div>
+                            <textarea th:field="*{message}" id="message" placeholder="Type your message here"></textarea>
+                            <ul>
+                                <li class="alert alert-danger" th:each="err : ${#fields.errors('message')}" th:text="${err}" ></li>
+                            </ul>
+                        </div>3
                         <div class="text-start">
                             <button class="btn btn-style btn-style-3">Send Message</button>
                         </div>
@@ -155,11 +170,11 @@ Author URL: http://w3layouts.com
     <!-- //move top -->
 
     <!-- common jquery plugin -->
-    <script src="assets/js/jquery-3.3.1.min.js"></script>
+    <script src="/assets/js/jquery-3.3.1.min.js"></script>
     <!-- //common jquery plugin -->
 
     <!-- theme switch js (light and dark)-->
-    <script src="assets/js/theme-change.js"></script>
+    <script src="/assets/js/theme-change.js"></script>
     <!-- //theme switch js (light and dark)-->
 
     <!-- MENU-JS -->
@@ -202,7 +217,7 @@ Author URL: http://w3layouts.com
     <!-- //disable body scroll which navbar is in active -->
 
     <!-- bootstrap -->
-    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
     <!-- //bootstrap -->
     <!-- //Js scripts -->
 </body>
