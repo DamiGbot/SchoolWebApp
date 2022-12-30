@@ -38,7 +38,7 @@ public class HolidaysController {
 //    }
 
     @GetMapping(value = {"/{display}"})
-    public String displayHolidays(Model model, @PathVariable()String display) {
+    public String displayHolidays(Model model, @PathVariable() String display) {
         if (display != null) {
             switch (display) {
                 case "festival":
