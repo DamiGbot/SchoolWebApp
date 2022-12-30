@@ -11,7 +11,7 @@ public class GlobalExceptionAspects {
     public ModelAndView exceptionHandler(Exception exception) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("error");
-        modelAndView.addObject("errorMsg", exception.getMessage());
+        modelAndView.addObject("errormsg", exception.getMessage());
         return modelAndView;
     }
 }
