@@ -17,8 +17,9 @@ Author URL: http://w3layouts.com
 </head>
 
 <body>
-
-    <div th:replace="header :: #site-header"></div>
+    <!-- header -->
+    <div th:replace="~{header :: header}">...</div>
+    <!-- //header -->
 
     <!-- banner section -->
     <section id="home" class="w3l-banner py-5">
@@ -350,7 +351,9 @@ Author URL: http://w3layouts.com
     </section>
     <!-- //call block -->
 
-    <div th:replace="footer :: footer"></div>
+    <!-- footer block -->
+    <div th:replace="~{footer :: footer}">...</div>
+    <!-- //footer block -->
 
     <!-- Js scripts -->
     <!-- move top -->
