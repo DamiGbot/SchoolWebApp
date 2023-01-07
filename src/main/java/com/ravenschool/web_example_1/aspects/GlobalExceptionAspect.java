@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
 
 @ControllerAdvice
-public class GlobalExceptionAspects {
+public class GlobalExceptionAspect {
 
     @ExceptionHandler(Exception.class)
     public ModelAndView exceptionHandler(Exception exception) {
