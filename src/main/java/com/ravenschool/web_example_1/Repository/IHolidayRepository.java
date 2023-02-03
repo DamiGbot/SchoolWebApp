@@ -1,9 +1,8 @@
 package com.ravenschool.web_example_1.Repository;
 
 import com.ravenschool.web_example_1.Model.Holiday;
+import org.springframework.data.repository.CrudRepository;
 
-import java.util.List;
+public interface IHolidayRepository extends CrudRepository<Holiday, String> {
 
-public interface IHolidayRepository {
-    List<Holiday> GetAllHolidays();
 }

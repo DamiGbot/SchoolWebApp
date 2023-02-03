@@ -1,6 +1,5 @@
 package com.ravenschool.web_example_1.config;
 
-import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -19,7 +18,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-        http.csrf().ignoringRequestMatchers("/contact/saveMsg").ignoringRequestMatchers(PathRequest.toH2Console())
+        http.csrf().ignoringRequestMatchers("/contact/saveMsg")
                 .and()
                 .authorizeHttpRequests()
                 .requestMatchers("/dashboard").authenticated()
@@ -33,7 +32,6 @@ public class SecurityConfig {
                 .requestMatchers("/courses").permitAll()
                 .requestMatchers("/login").permitAll()
                 .requestMatchers("/logout").permitAll()
-                .requestMatchers(PathRequest.toH2Console()).permitAll()
                 .and()
                 .formLogin().loginPage("/login")
                 .defaultSuccessUrl("/dashboard").failureUrl("/login?error=true").permitAll()

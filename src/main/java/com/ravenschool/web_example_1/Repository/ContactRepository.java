@@ -34,7 +34,6 @@ public class ContactRepository implements IContactRepository {
 
     @Override
     public List<Contact> findMsgsWithStatus(String status) {
-
         String SQL_FIND_MESSAGES_BY_STATUS = "select * from contact_msg where status = ?";
         return _jdbcTemplate.query(SQL_FIND_MESSAGES_BY_STATUS, new PreparedStatementSetter() {
             @Override

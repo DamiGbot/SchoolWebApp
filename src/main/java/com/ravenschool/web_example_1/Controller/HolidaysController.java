@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,7 +40,9 @@ public class HolidaysController {
             }
         }
 
-        List<Holiday> holidays = _holidayService.getAllHolidays();
+        Iterable<Holiday> allHolidays = _holidayService.getAllHolidays();
+        List<Holiday> holidays = new ArrayList<>();
+        allHolidays.forEach(holidays::add);
 
         Holiday.Type[] types = Holiday.Type.values();
         for (Holiday.Type type : types) {

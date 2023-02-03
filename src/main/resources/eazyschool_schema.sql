@@ -1,3 +1,7 @@
+create database eazyschool;
+
+use eazyschool;
+
 CREATE TABLE IF NOT EXISTS `contact_msg` (
   `contact_id` int AUTO_INCREMENT  PRIMARY KEY,
   `name` varchar(100) NOT NULL,

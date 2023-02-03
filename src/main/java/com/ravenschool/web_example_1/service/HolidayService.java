@@ -4,8 +4,6 @@ import com.ravenschool.web_example_1.Model.Holiday;
 import com.ravenschool.web_example_1.Repository.IHolidayRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 public class HolidayService {
     private final IHolidayRepository _holidayRepository;
@@ -14,8 +12,8 @@ public class HolidayService {
         this._holidayRepository = holidayRepository;
     }
 
-    public List<Holiday> getAllHolidays() {
-        List<Holiday> holidays = _holidayRepository.GetAllHolidays();
+    public Iterable<Holiday> getAllHolidays() {
+        Iterable<Holiday> holidays = _holidayRepository.findAll();
         return holidays;
     }
 }
