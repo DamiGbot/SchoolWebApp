@@ -42,6 +42,7 @@ public class HolidaysController {
 
         Iterable<Holiday> allHolidays = _holidayService.getAllHolidays();
         List<Holiday> holidays = new ArrayList<>();
+        // Iterable --> Collection
         allHolidays.forEach(holidays::add);
 
         Holiday.Type[] types = Holiday.Type.values();

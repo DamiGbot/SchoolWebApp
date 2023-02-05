@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class HolidayService {
+
     private final IHolidayRepository _holidayRepository;
 
     public HolidayService(IHolidayRepository holidayRepository) {

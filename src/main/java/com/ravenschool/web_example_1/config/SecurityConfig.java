@@ -22,7 +22,7 @@ public class SecurityConfig {
                 .and()
                 .authorizeHttpRequests()
                 .requestMatchers("/dashboard").authenticated()
-                .requestMatchers("/displayMessages").hasRole("ADMIN")
+                .requestMatchers("/contact/displayMessages").hasRole("ADMIN")
                 .requestMatchers("/contact/closeMsg/**").hasRole("ADMIN")
                 .requestMatchers("/assets/**").permitAll()
                 .requestMatchers("", "/", "/home").permitAll()

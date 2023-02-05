@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
-public class ContactRepository implements IContactRepository {
+public class ContactRepository {
 
     private final JdbcTemplate _jdbcTemplate;
 
@@ -24,7 +24,6 @@ public class ContactRepository implements IContactRepository {
         this._jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    @Override
     public boolean saveContactMsg(Contact contact) {
         String SQL_INSERT_NEW_MESSAGE = "insert into contact_msg(name, mobile_num, email, subject, message, " +
                 "status, created_by, created_at) values(?,?,?,?,?,?,?,?)";
@@ -32,7 +31,6 @@ public class ContactRepository implements IContactRepository {
                 contact.getSubject(), contact.getMessage(), contact.getStatus(), contact.getCreated_by(), contact.getCreated_at()) > 0;
     }
 
-    @Override
     public List<Contact> findMsgsWithStatus(String status) {
         String SQL_FIND_MESSAGES_BY_STATUS = "select * from contact_msg where status = ?";
         return _jdbcTemplate.query(SQL_FIND_MESSAGES_BY_STATUS, new PreparedStatementSetter() {
@@ -43,7 +41,6 @@ public class ContactRepository implements IContactRepository {
         }, new ContactMapper());
     }
 
-    @Override
     public boolean updateMsgStatus(int contactId, String status, String name) {
 
         String SQL_CLOSE_MSG = "update contact_msg set status = ?, updated_by = ?, updated_at = ? where contact_id = ?";
