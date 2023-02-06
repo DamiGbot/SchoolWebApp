@@ -9,6 +9,6 @@ import java.util.List;
 @Repository
 public interface IContactRepository extends CrudRepository<Contact, Integer> {
 
-    // Derived Queries
+    // Derived Queries abstract methods
     List<Contact> findByStatus(String status);
 }
