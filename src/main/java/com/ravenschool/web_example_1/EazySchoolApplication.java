@@ -13,5 +13,4 @@ public class EazySchoolApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(EazySchoolApplication.class, args);
 	}
-
 }
