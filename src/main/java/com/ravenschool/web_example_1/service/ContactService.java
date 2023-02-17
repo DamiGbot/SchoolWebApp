@@ -6,7 +6,6 @@ import com.ravenschool.web_example_1.Repository.IContactRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,8 +22,6 @@ public class ContactService {
     public boolean saveMessageDetails(Contact contact) {
 
         contact.setStatus(IEazySchoolConstants.OPEN);
-        contact.setCreated_by(IEazySchoolConstants.ANONYMOUS);
-        contact.setCreated_at(LocalDateTime.now());
         boolean isMessageSaved = saveToDb(contact);
         log.info(contact.toString());
 
@@ -36,12 +33,10 @@ public class ContactService {
         return contactMsgs;
     }
 
-    public boolean updateMsgStatus(int contactId, String updatedBy) {
+    public boolean updateMsgStatus(int contactId) {
         Optional<Contact> contact = _contactRepository.findById(contactId);
         contact.ifPresent(contact1 -> {
             contact1.setStatus(IEazySchoolConstants.CLOSE);
-            contact1.setUpdated_by(updatedBy);
-            contact1.setUpdated_at(LocalDateTime.now());
         });
 
         boolean isContactUpdated = false;

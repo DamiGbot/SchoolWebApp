@@ -5,7 +5,6 @@ import com.ravenschool.web_example_1.service.ContactService;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -54,8 +53,8 @@ public class ContactController {
     }
 
     @GetMapping(value = {"/closeMsg"})
-    public String closeAMessage(@RequestParam(name = "id") int contactId, Authentication authentication) {
-        _contactService.updateMsgStatus(contactId, authentication.getName());
+    public String closeAMessage(@RequestParam(name = "id") int contactId) {
+        _contactService.updateMsgStatus(contactId);
         return "redirect:/contact/displayMessages";
     }
 }
