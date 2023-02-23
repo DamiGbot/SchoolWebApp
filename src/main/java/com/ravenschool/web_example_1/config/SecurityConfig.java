@@ -19,6 +19,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http.csrf().ignoringRequestMatchers("/contact/saveMsg")
+                .ignoringRequestMatchers("/public/**")
                 .and()
                 .authorizeHttpRequests()
                 .requestMatchers("/dashboard").authenticated()
@@ -31,6 +32,7 @@ public class SecurityConfig {
                 .requestMatchers("/about").permitAll()
                 .requestMatchers("/courses").permitAll()
                 .requestMatchers("/login").permitAll()
+                .requestMatchers("/public/**").permitAll()
                 .requestMatchers("/logout").permitAll()
                 .and()
                 .formLogin().loginPage("/login")

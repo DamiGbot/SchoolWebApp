@@ -26,10 +26,10 @@ Author URL: http://w3layouts.com
     <section class="inner-banner py-5">
         <div class="w3l-breadcrumb py-lg-5">
             <div class="container pt-4 pb-sm-4">
-                <h4 class="inner-text-title pt-5">Contact Us</h4>
+                <h4 class="inner-text-title pt-5">Register</h4>
                 <ul class="breadcrumbs-custom-path">
                     <li><a th:href="@{/home}">Home</a></li>
-                    <li class="active"><i class="fas fa-angle-right"></i>Contact Us</li>
+                    <li class="active"><i class="fas fa-angle-right"></i>Register</li>
                 </ul>
             </div>
         </div>
@@ -40,90 +40,58 @@ Author URL: http://w3layouts.com
     <section class="w3l-contact py-5" id="contact">
         <div class="container py-md-5 py-4">
             <div class="title-main text-center mx-auto mb-md-5 mb-4" style="max-width:500px;">
-                <p class="text-uppercase">Get In Touch</p>
-                <h3 class="title-style">Contact Us</h3>
+                <h3 class="title-style">Registration Form</h3>
             </div>
-            <div class="row contact-block">
-                <div class="col-md-7 contact-right">
+            <div class="row login-block">
+                <div class="col-md-7 login-center">
                     <ul>
-                        <li class="alert alert-danger" role="alert" th:each="error : ${#fields.errors('contact.*')}" th:text="${error}" />
+                        <li class="alert alert-danger" role="alert" th:each="error : ${#fields.errors('person.*')}" th:text="${error}" />
                     </ul>
-                    <form action="/contact/saveMsg" method="post" class="signin-form" th:object="${contact}">
+                    <form th:action="@{/public/createUser}" method="post" class="signin-form" th:object="${person}">
+                        <div class="title-main text-center mx-auto mb-md-5 mb-4" style="max-width:500px;">
+                            <p class="text-uppercase">Personal Details</p>
+                        </div>
                         <div class="input-grids">
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <input type="text" th:field="*{name}" placeholder="Your Name"
+                                    <input type="text" th:field="*{name}" placeholder="Name"
                                         class="contact-input" />
                                 </div>
                                 <div class="col-sm-6">
-                                    <input type="text" th:field="*{mobileNum}" placeholder="Your Mobile Number"
+                                    <input type="text" th:field="*{mobileNumber}" placeholder="Mobile Number"
                                         class="contact-input" />
                                 </div>
                             </div>
-                            <input type="text" th:field="*{email}" placeholder="Your Email"
-                                class="contact-input" />
-                            <input type="text" th:field="*{subject}" placeholder="Subject"
-                                class="contact-input" />
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <input type="text" th:field="*{email}" placeholder="Email"
+                                           class="contact-input" />
+                                </div>
+                                <div class="col-sm-6">
+                                    <input type="text" th:field="*{confirmEmail}" placeholder="Confirm Email"
+                                           class="contact-input" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <input type="password" th:field="*{pwd}" placeholder="Password"
+                                           class="contact-input" />
+                                </div>
+                                <div class="col-sm-6">
+                                    <input type="password" th:field="*{confirmPwd}" placeholder="Confirm Password"
+                                           class="contact-input" />
+                                </div>
+                            </div>
+
                         </div>
-                        <div class="form-input">
-                            <textarea th:field="*{message}" placeholder="Type your message here"></textarea>
-                        </div>
-                        <div class="text-start">
-                            <button class="btn btn-style btn-style-3">Send Message</button>
+                        <div class="col-md-3 login-center text-start">
+                            <button class="btn btn-style btn-style-3">Register</button>
                         </div>
                     </form>
-                </div>
-                <div class="col-md-5 ps-lg-5 mt-md-0 mt-5">
-                    <div class="contact-left">
-                        <div class="cont-details">
-                            <div class="d-flex contact-grid">
-                                <div class="cont-left text-center me-3">
-                                    <i class="fas fa-building"></i>
-                                </div>
-                                <div class="cont-right">
-                                    <h6>School Address</h6>
-                                    <p>Eazy School, 10001, 5th Avenue, #06 lane street, NY - 10017.</p>
-                                </div>
-                            </div>
-                            <div class="d-flex contact-grid mt-4 pt-lg-2">
-                                <div class="cont-left text-center me-3">
-                                    <i class="fas fa-phone-alt"></i>
-                                </div>
-                                <div class="cont-right">
-                                    <h6>Call Us</h6>
-                                    <p><a href="tel:+1(21) 234 4567">+1(21) 673 4587</a></p>
-                                </div>
-                            </div>
-                            <div class="d-flex contact-grid mt-4 pt-lg-2">
-                                <div class="cont-left text-center me-3">
-                                    <i class="fas fa-envelope-open-text"></i>
-                                </div>
-                                <div class="cont-right">
-                                    <h6>Email Us</h6>
-                                    <p><a href="mailto:info@eazyschool.com" class="mail">info@eazyschool.com</a></p>
-                                </div>
-                            </div>
-                            <div class="d-flex contact-grid mt-4 pt-lg-2">
-                                <div class="cont-left text-center me-3">
-                                    <i class="fas fa-headphones-alt"></i>
-                                </div>
-                                <div class="cont-right">
-                                    <h6>Customer Support</h6>
-                                    <p><a href="support@eazyschool.com" class="mail">support@eazyschool.com</a></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
     </section>
-    <!-- map -->
-    <div class="map">
-        <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d193595.15830921454!2d-74.11976369744556!3d40.69766374856529!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c24fa5d33f083b%3A0xc80b8f06e177fe62!2sNew%20York%2C%20NY%2C%20USA!5e0!3m2!1sen!2sin!4v1639587930884!5m2!1sen!2sin"
-            width="100%" height="400" frameborder="0" style="border: 0px;" allowfullscreen=""></iframe>
-    </div>
     <!-- //contact block -->
 
     <!-- footer block -->

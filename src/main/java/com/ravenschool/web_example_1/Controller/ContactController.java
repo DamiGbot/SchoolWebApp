@@ -1,5 +1,6 @@
 package com.ravenschool.web_example_1.Controller;
 
+import com.ravenschool.web_example_1.Helper.ModelValidation;
 import com.ravenschool.web_example_1.Model.Contact;
 import com.ravenschool.web_example_1.service.ContactService;
 import jakarta.validation.Valid;
@@ -21,10 +22,12 @@ import java.util.List;
 @Slf4j
 public class ContactController {
     private final ContactService _contactService;
+    private final ModelValidation<Contact> _modelValidation;
 
     @Autowired
-    public ContactController(ContactService contactService) {
+    public ContactController(ContactService contactService, ModelValidation<Contact> modelValidation) {
         this._contactService = contactService;
+        this._modelValidation = modelValidation;
     }
 
     @RequestMapping(value = {""})
@@ -35,10 +38,9 @@ public class ContactController {
 
     @PostMapping(value = {"/saveMsg"})
     public String SaveMessage(@Valid Contact contact, Errors errors) {
-        if (errors.hasErrors()) {
-            log.error("Contact form validation failed due to: " + errors);
-            return "contact.html";
-        }
+        if (errors.hasErrors())
+            return _modelValidation.modelErrorPage(errors, "contact.html", "Contact form");
+
 
         _contactService.saveMessageDetails(contact);
         return "redirect:/contact";
