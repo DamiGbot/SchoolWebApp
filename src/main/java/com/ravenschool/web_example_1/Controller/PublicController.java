@@ -4,6 +4,7 @@ import com.ravenschool.web_example_1.Helper.ModelValidation;
 import com.ravenschool.web_example_1.Model.Person;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping(value = {"/public"})
 public class PublicController {
 
+    @Autowired
     private final ModelValidation<Person> _modelValidation;
 
     public PublicController(ModelValidation<Person> modelValidation) {
@@ -35,7 +37,6 @@ public class PublicController {
         if (errors.hasErrors())
             return _modelValidation.modelErrorPage(errors, "register.html", "Create user");
 
-
-        return "redirect:/public/register";
+        return "redirect:/login?register=true";
     }
 }
