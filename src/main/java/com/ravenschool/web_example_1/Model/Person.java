@@ -28,7 +28,7 @@ public class Person extends BasePerson {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
-    private int person_id;
+    private int personId;
 
     @NotBlank(message="Confirm Email must not be blank")
     @Email(message = "Please provide a valid Confirm email address" )
