@@ -25,6 +25,7 @@ import org.hibernate.annotations.GenericGenerator;
         )
 })
 public class Person extends BasePerson {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
@@ -44,4 +45,14 @@ public class Person extends BasePerson {
     @Size(min = 5, message = "Confirm Password must be at least 5 characters long")
     @Transient
     private String confirmPwd;
+
+    // region foreignKey
+    @OneToOne(cascade = {CascadeType.ALL}, targetEntity = Address.class)
+    @JoinColumn(name = "addressId", referencedColumnName = "addressId")
+    private Address address;
+
+    @OneToOne(cascade = CascadeType.PERSIST) // targetEntity is an optional Attribute
+    @JoinColumn(name = "roleId", referencedColumnName = "roleId", nullable = false)
+    private Role role;
+    // endregion
 }

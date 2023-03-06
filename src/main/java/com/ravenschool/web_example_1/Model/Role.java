@@ -12,8 +12,8 @@ public class Role extends BaseEntity {
     @Id
     @GeneratedValue(generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
-    private int role_id;
+    private int roleId;
 
-    private String role_name;
+    private String roleName;
 
 }

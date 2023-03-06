@@ -2,6 +2,7 @@ package com.ravenschool.web_example_1.Controller;
 
 import com.ravenschool.web_example_1.Helper.ModelValidation;
 import com.ravenschool.web_example_1.Model.Person;
+import com.ravenschool.web_example_1.service.PersonService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class PublicController {
 
     private final ModelValidation<Person> _modelValidation;
+    private final PersonService _personService;
 
     @GetMapping(value = "/register")
     public String displayRegisterPage(Model model) {
@@ -29,9 +31,11 @@ public class PublicController {
 
     @PostMapping(value = "/createUser")
     public String createUser(@Valid Person person, Errors errors) {
-
-        if (errors.hasErrors())
+        if (errors.hasErrors() )
             return _modelValidation.modelErrorPage(errors, "register.html", "Create user");
+
+        int newUserId = _personService.createUser(person);
+        if (newUserId == 0) return "register.html";
 
         return "redirect:/login?register=true";
     }

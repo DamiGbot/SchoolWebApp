@@ -3,6 +3,7 @@ package com.ravenschool.web_example_1.service;
 import com.ravenschool.web_example_1.Constants.IEazySchoolConstants;
 import com.ravenschool.web_example_1.Model.Contact;
 import com.ravenschool.web_example_1.Repository.IContactRepository;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -11,13 +12,10 @@ import java.util.Optional;
 
 @Slf4j
 @Service
+@AllArgsConstructor
 public class ContactService {
 
     private final IContactRepository _contactRepository;
-
-    public ContactService(IContactRepository contactRepository) {
-        this._contactRepository = contactRepository;
-    }
 
     public boolean saveMessageDetails(Contact contact) {
 

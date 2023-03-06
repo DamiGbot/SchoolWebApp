@@ -4,8 +4,8 @@ import com.ravenschool.web_example_1.Helper.ModelValidation;
 import com.ravenschool.web_example_1.Model.Contact;
 import com.ravenschool.web_example_1.service.ContactService;
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -19,16 +19,11 @@ import java.util.List;
 
 @Controller
 @RequestMapping(value = {"/contact"})
+@AllArgsConstructor
 @Slf4j
 public class ContactController {
     private final ContactService _contactService;
     private final ModelValidation<Contact> _modelValidation;
-
-    @Autowired
-    public ContactController(ContactService contactService, ModelValidation<Contact> modelValidation) {
-        this._contactService = contactService;
-        this._modelValidation = modelValidation;
-    }
 
     @RequestMapping(value = {""})
     public String displayContactPage(Model model) {
