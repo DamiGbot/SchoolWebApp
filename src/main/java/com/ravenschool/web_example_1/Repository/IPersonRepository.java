@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface IPersonRepository extends JpaRepository<Person, Integer> {
-
+    Person getByEmail(String email);
 }

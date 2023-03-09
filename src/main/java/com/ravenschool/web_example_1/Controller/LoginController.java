@@ -24,11 +24,16 @@ public class LoginController {
                                    Model model) {
 
         String errorMessage = null;
-        if(error != null) errorMessage = "Username or Password is incorrect !!";
+        boolean danger = false;
+        if(error != null) {
+            errorMessage = "Username or Password is incorrect !!";
+            danger = true;
+        }
         if(logout != null) errorMessage = "You have been successfully logged out !!";
         if (register != null) errorMessage = "Your registration successful. Login with registered credentials!!";
 
         model.addAttribute("errorMessage", errorMessage);
+        model.addAttribute("isDanger", danger);
 
         return "login.html";
     }
