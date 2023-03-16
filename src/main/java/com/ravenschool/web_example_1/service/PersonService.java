@@ -26,4 +26,8 @@ public class PersonService {
 
         return newUser.getPersonId();
     }
+
+    public Person getUser(String email) {
+        return _personRepository.getByEmail(email);
+    }
 }
