@@ -1,14 +1,15 @@
 package com.ravenschool.web_example_1.Controller;
 
 import com.ravenschool.web_example_1.Helper.ModelValidation;
+import com.ravenschool.web_example_1.Model.Address;
 import com.ravenschool.web_example_1.Model.Person;
 import com.ravenschool.web_example_1.Model.Profile;
+import com.ravenschool.web_example_1.service.PersonService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.dozer.Mapper;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -25,6 +26,7 @@ public class ProfileController {
 
     private final Mapper _mapper;
     private final ModelValidation<Profile> _modelValidation;
+    private final PersonService _personService;
 
     @GetMapping("/displayProfile")
     public ModelAndView displayProfile(Model model, HttpSession session) {
@@ -38,13 +40,16 @@ public class ProfileController {
     }
 
     @PostMapping("/updateProfile")
-    public String updateProfile(@Valid Profile profile, Errors errors, Authentication authentication) {
+    public String updateProfile(@Valid Profile profile, Errors errors, HttpSession session) {
         if (errors.hasErrors())
-            return _modelValidation.modelErrorPage(errors, "/profile/displayProfile.html", "Profile form");
-
-        System.out.println(profile);
-
-        return "redirect:/displayProfile";
+            return _modelValidation.modelErrorPage(errors, "profile.html", "Profile form");
+        Person person = (Person) session.getAttribute("currPerson");
+        Address personAddress = new Address();
+        _mapper.map(profile, personAddress);
+        person.setAddress(personAddress);
+        _personService.updateUser(person);
+        session.setAttribute("currPerson", person);
+        return "redirect:/profile/displayProfile";
     }
 }
 

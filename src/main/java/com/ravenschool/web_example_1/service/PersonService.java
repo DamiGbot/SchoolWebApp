@@ -30,4 +30,10 @@ public class PersonService {
     public Person getUser(String email) {
         return _personRepository.getByEmail(email);
     }
+
+    public int updateUser(Person person) {
+
+        Person currPerson = _personRepository.save(person);
+        return currPerson.getPersonId();
+    }
 }
