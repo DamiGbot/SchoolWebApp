@@ -1,6 +1,7 @@
 package com.ravenschool.web_example_1.service;
 
 import com.ravenschool.web_example_1.Model.EazyClass;
+import com.ravenschool.web_example_1.Model.Person;
 import com.ravenschool.web_example_1.Repository.IEazyClassRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,7 @@ import java.util.Optional;
 public class EazyClassService {
 
     private final IEazyClassRepository _IEazyClassRepository;
+    private final PersonService _personService;
 
     public List<EazyClass> getAllClasses() {
         return _IEazyClassRepository.findAll();
@@ -28,9 +30,14 @@ public class EazyClassService {
 
     public int deleteClass(int id) {
         Optional<EazyClass> eazyClass = _IEazyClassRepository.findById(id);
+        // remove the person from the classes
         if (eazyClass.isEmpty())
             return -1;
 
+        for (Person person : eazyClass.get().getPersons()) {
+            person.setEazyClass(null);
+            _personService.updateUser(person);
+        }
         _IEazyClassRepository.deleteById(id);
         return 0;
     }
