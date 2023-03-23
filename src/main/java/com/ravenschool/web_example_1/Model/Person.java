@@ -51,6 +51,10 @@ public class Person extends BasePerson {
     @JoinColumn(name = "addressId", referencedColumnName = "addressId")
     private Address address;
 
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST})
+    @JoinColumn(name = "class_id", referencedColumnName = "classId")
+    private EazyClass eazyClass;
+
     @OneToOne(cascade = CascadeType.PERSIST) // targetEntity is an optional Attribute
     @JoinColumn(name = "roleId", referencedColumnName = "roleId", nullable = false)
     private Role role;
