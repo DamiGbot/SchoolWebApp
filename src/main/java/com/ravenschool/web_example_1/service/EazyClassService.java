@@ -28,6 +28,21 @@ public class EazyClassService {
         return newClass.getClassId();
     }
 
+    public EazyClass getClass(int id) {
+        Optional<EazyClass> currOptional = _IEazyClassRepository.findById(id);
+
+        EazyClass currClass = null;
+        if (currOptional.isPresent()){
+            currClass = currOptional.get();
+        }
+
+        return currClass;
+    }
+
+    public EazyClass updateClass(int id) {
+        return getClass(id);
+    }
+
     public int deleteClass(int id) {
         Optional<EazyClass> eazyClass = _IEazyClassRepository.findById(id);
         // remove the person from the classes

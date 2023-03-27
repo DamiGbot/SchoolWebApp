@@ -6,10 +6,12 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "person")
 @FieldsValueMatch.List({
@@ -51,7 +53,7 @@ public class Person extends BasePerson {
     @JoinColumn(name = "addressId", referencedColumnName = "addressId")
     private Address address;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST})
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "class_id", referencedColumnName = "classId")
     private EazyClass eazyClass;
 

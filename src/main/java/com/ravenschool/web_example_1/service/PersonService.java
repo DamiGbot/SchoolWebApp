@@ -9,6 +9,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @AllArgsConstructor
 public class PersonService {
@@ -31,9 +33,22 @@ public class PersonService {
         return _personRepository.getByEmail(email);
     }
 
-    public int updateUser(Person person) {
-
-        Person currPerson = _personRepository.save(person);
-        return currPerson.getPersonId();
+    public int  updateUser(Person person) {
+        Person savePerson = _personRepository.save(person);
+        return savePerson.getPersonId();
     }
+
+    public Person deleteClass(int id) {
+        Optional<Person> person = _personRepository.findById(id);
+
+        Person currPerson = null;
+        if (person.isPresent()) {
+            currPerson = person.get();
+            currPerson.setEazyClass(null);
+            updateUser(currPerson);
+        }
+
+        return currPerson;
+    }
+
 }
