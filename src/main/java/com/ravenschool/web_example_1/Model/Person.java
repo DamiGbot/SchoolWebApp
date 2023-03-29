@@ -10,6 +10,8 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
+import java.util.Set;
+
 @Getter
 @Setter
 @Entity
@@ -60,5 +62,15 @@ public class Person extends BasePerson {
     @OneToOne(cascade = CascadeType.PERSIST) // targetEntity is an optional Attribute
     @JoinColumn(name = "roleId", referencedColumnName = "roleId", nullable = false)
     private Role role;
+    // endregion
+
+    // region ManyToMany
+    @ManyToMany(cascade = {CascadeType.PERSIST}, fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "person_courses",
+            joinColumns = @JoinColumn(name = "person_id", referencedColumnName = "personId"),
+            inverseJoinColumns = @JoinColumn(name = "course_id", referencedColumnName = "courseId")
+    )
+    private Set<Course> courses;
     // endregion
 }
