@@ -1,8 +1,10 @@
 package com.ravenschool.web_example_1.Controller;
 
 import com.ravenschool.web_example_1.Helper.ModelValidation;
+import com.ravenschool.web_example_1.Model.Course;
 import com.ravenschool.web_example_1.Model.EazyClass;
 import com.ravenschool.web_example_1.Model.Person;
+import com.ravenschool.web_example_1.service.CourseService;
 import com.ravenschool.web_example_1.service.EazyClassService;
 import com.ravenschool.web_example_1.service.PersonService;
 import jakarta.servlet.http.HttpSession;
@@ -12,10 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -30,11 +29,50 @@ public class AdminController {
     private final ModelValidation<EazyClass> _modelValidation;
     private final EazyClassService _eazyClassService;
     private final PersonService _personService;
+    private final CourseService _courseService;
 
-//    @GetMapping(value = {"/courses"})
-//    public ModelAndView courses() {
-//
-//    }
+    @GetMapping(value = {"/courses"})
+    public ModelAndView courses() {
+        List<Course> courses = _courseService.getCourses();
+        ModelAndView modelAndView = new ModelAndView("courses_secure.html");
+        modelAndView.addObject("courses", courses);
+        modelAndView.addObject("course", new Course());
+        return modelAndView;
+    }
+
+    @PostMapping(value = "/addNewCourse")
+    public String addNewCourse(@Valid Course course, Errors errors) {
+
+        if (errors.hasErrors())
+            return _modelValidation.modelErrorPage(errors, "courses_secure.html", "Add new Course Form");
+
+        boolean isSaved = _courseService.createCourse(course);
+        // if isSaved is false probably add logic for that.
+
+        return "redirect:/admin/courses";
+    }
+
+    @GetMapping(value = "/viewStudents")
+    public ModelAndView viewStudents(@RequestParam(value = "id") int courseId, HttpSession session) {
+        // we have a link table that maps person_id to course_id
+        // we then need to get the person_id from the Set<Person> available in the course Model.
+        Course course = _courseService.getCourse(courseId);
+        session.setAttribute("courseId", courseId);
+        // you can do a check if students are null
+        ModelAndView modelAndView = new ModelAndView("course_students.html");
+        modelAndView.addObject("courses", course);
+        modelAndView.addObject("person", new Person());
+        return modelAndView;
+    }
+
+    @PostMapping(value = "/addStudentToCourse")
+    public String addStudentToCourse(@Valid @ModelAttribute(name = "person") Person person, Errors errors, HttpSession session) {
+        if (errors.hasErrors())
+            return _modelValidation.modelErrorPage(errors, "course_students.html", "Add new Student Form");
+        int courseId = (int)session.getAttribute("courseId");
+        boolean isAdded = _courseService.addNewStudents(courseId, person);
+        return "redirect:/admin/viewStudents";
+    }
 
     @GetMapping(value = {"/classes"})
     public ModelAndView classes(Model model) {
@@ -64,7 +102,7 @@ public class AdminController {
     }
 
     @GetMapping(value = {"/displayStudents"})
-    public ModelAndView viewStudents(@RequestParam("classId") int id, HttpSession httpSession,
+    public ModelAndView viewStudentsInClass(@RequestParam("classId") int id, HttpSession httpSession,
                                      @RequestParam(value = "error", required = false) String error) {
         // eazyClass,
         ModelAndView modelAndView = new ModelAndView("students.html");
@@ -98,7 +136,7 @@ public class AdminController {
     }
 
     @PostMapping("/addStudent")
-    public ModelAndView addStudent(Person person, Errors errors, HttpSession httpSession) {
+    public ModelAndView addStudentToClass(Person person, Errors errors, HttpSession httpSession) {
         ModelAndView modelAndView = new ModelAndView();
 
         EazyClass eazyClass = (EazyClass) httpSession.getAttribute("class");
