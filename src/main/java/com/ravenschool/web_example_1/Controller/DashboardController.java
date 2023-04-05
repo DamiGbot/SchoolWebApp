@@ -21,6 +21,9 @@ public class DashboardController {
         Person person = _personService.getUser(authentication.getName());
         model.addAttribute("username", person.getName());
         model.addAttribute("roles", String.valueOf(authentication.getAuthorities()));
+        if (person.getEazyClass() != null && person.getEazyClass().getName() != null) {
+            model.addAttribute("enrolledClass", person.getEazyClass().getName());
+        }
         session.setAttribute("currPerson", person);
         return "dashboard.html";
     }

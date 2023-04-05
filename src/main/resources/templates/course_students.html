@@ -85,7 +85,7 @@
       <tr th:each="person: ${courses.persons}">
         <td th:text="${person.name}"></td>
         <td th:text="${person.email}"></td>
-        <td th:text="${person.mobileNumber}"></td>
+        <td th:text="${person.mobileNum}"></td>
         <td><a th:href="@{/admin/deleteStudentFromCourse(personId=${person.personId})}" class="btn btn-warning">DELETE</a></td>
       </tr>
       </tbody>

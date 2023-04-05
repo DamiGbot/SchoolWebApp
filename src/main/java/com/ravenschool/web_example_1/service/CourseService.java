@@ -19,7 +19,7 @@ public class CourseService {
     private final ICourseRepository _courseRepository;
     private final PersonService _personService;
 
-    public List<Course> getCourses() {
+    public List<Course> getAllCourses() {
         List<Course> courses = _courseRepository.findAll();
         // Add Extra Logic to be performed before returning the list.
         return courses;
@@ -43,23 +43,22 @@ public class CourseService {
         return newCourse.getCourseId() > 0;
     }
 
-    public boolean addNewStudents(int id, Person person) {
-        Optional<Course> isCourse = _courseRepository.findById(id);
-        if (isCourse.isPresent()) {
-            Course course = isCourse.get();
-            Set<Person> students = course.getPersons();
-            Person currPerson = _personService.getUser(person.getEmail());
-            if (currPerson == null || students.contains(currPerson))
-                return false;
-            students.add(currPerson);
-            course.setPersons(students);
-            _courseRepository.save(course);
-            Set<Course> currPersonCourses = currPerson.getCourses();
-            currPersonCourses.add(course);
-            currPerson.setCourses(currPersonCourses);
-            _personService.updateUser(currPerson);
-        }
+    public boolean addNewStudent(Course course, Person person) {
+        Set<Person> students = course.getPersons();
+        if (students.contains(person))
+            return false;
 
+        students.add(person);
+        Set<Course> currPersonCourses = person.getCourses();
+        currPersonCourses.add(course);
+        _personService.updateUser(person);
         return true;
+    }
+
+    public void deleteStudent(Course course, int personId) {
+        Person currPerson = _personService.getUserId(personId);
+        course.getPersons().remove(currPerson);
+        currPerson.getCourses().remove(course);
+        _personService.updateUser(currPerson);
     }
 }

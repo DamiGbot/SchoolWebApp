@@ -33,7 +33,7 @@ public class AdminController {
 
     @GetMapping(value = {"/courses"})
     public ModelAndView courses() {
-        List<Course> courses = _courseService.getCourses();
+        List<Course> courses = _courseService.getAllCourses();
         ModelAndView modelAndView = new ModelAndView("courses_secure.html");
         modelAndView.addObject("courses", courses);
         modelAndView.addObject("course", new Course());
@@ -53,25 +53,57 @@ public class AdminController {
     }
 
     @GetMapping(value = "/viewStudents")
-    public ModelAndView viewStudents(@RequestParam(value = "id") int courseId, HttpSession session) {
+    public ModelAndView viewStudents(@RequestParam(value = "id") int courseId,
+                                     @RequestParam(value = "error", required = false) boolean error, HttpSession session) {
+        ModelAndView modelAndView = new ModelAndView("course_students.html");
+        if (error) {
+            modelAndView.addObject("errorMessage", session.getAttribute("errorMessage"));
+        }
+
         // we have a link table that maps person_id to course_id
         // we then need to get the person_id from the Set<Person> available in the course Model.
         Course course = _courseService.getCourse(courseId);
-        session.setAttribute("courseId", courseId);
+        session.setAttribute("course", course);
         // you can do a check if students are null
-        ModelAndView modelAndView = new ModelAndView("course_students.html");
         modelAndView.addObject("courses", course);
         modelAndView.addObject("person", new Person());
         return modelAndView;
     }
 
     @PostMapping(value = "/addStudentToCourse")
-    public String addStudentToCourse(@Valid @ModelAttribute(name = "person") Person person, Errors errors, HttpSession session) {
-        if (errors.hasErrors())
-            return _modelValidation.modelErrorPage(errors, "course_students.html", "Add new Student Form");
-        int courseId = (int)session.getAttribute("courseId");
-        boolean isAdded = _courseService.addNewStudents(courseId, person);
-        return "redirect:/admin/viewStudents";
+    public ModelAndView addStudentToCourse(@ModelAttribute(name = "person") Person person, HttpSession session) {
+        ModelAndView modelAndView = new ModelAndView();
+        Course course = (Course)session.getAttribute("course");
+        Person currPerson = _personService.getUser(person.getEmail());
+        if (currPerson == null || currPerson.getPersonId() < 0) {
+            modelAndView.setViewName("redirect:/admin/viewStudents?id=" + course.getCourseId()+"&error=true");
+            session.setAttribute("errorMessage", "Student doesn't exist");
+            return modelAndView;
+        }
+        boolean isAdded = _courseService.addNewStudent(course, currPerson);
+        if (!isAdded)
+        {
+            modelAndView.setViewName("redirect:/admin/viewStudents?id=" + course.getCourseId()+"&error=true");
+            session.setAttribute("errorMessage", "Student already in the class");
+            return modelAndView;
+        }
+        session.setAttribute("course", _courseService.getCourse(course.getCourseId()));
+        modelAndView.setViewName("redirect:/admin/viewStudents?id=" + course.getCourseId());
+        return modelAndView;
+    }
+
+    @GetMapping(value = "/deleteStudentFromCourse")
+    public ModelAndView deleteStudentFromCourse(@ModelAttribute(value = "personId") int personId, HttpSession session) {
+        // the course can be gotten from session
+        Course course = (Course)session.getAttribute("course");
+        // then we remove a student from course
+        // update the course and student set
+        _courseService.deleteStudent(course, personId);
+        // redirect to the viewStudent Page
+        session.setAttribute("course", _courseService.getCourse(course.getCourseId()));
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("redirect:/admin/viewStudents?id=" + course.getCourseId());
+        return modelAndView;
     }
 
     @GetMapping(value = {"/classes"})

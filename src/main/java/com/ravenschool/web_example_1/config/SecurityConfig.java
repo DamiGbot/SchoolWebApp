@@ -26,6 +26,7 @@ public class SecurityConfig {
                 .requestMatchers("/contact/displayMessages").hasRole("ADMIN")
                 .requestMatchers("/contact/closeMsg/**").hasRole("ADMIN")
                 .requestMatchers("/admin/**").hasRole("ADMIN")
+                .requestMatchers("/student/**").hasRole("STUDENT")
                 .requestMatchers("/assets/**").permitAll()
                 .requestMatchers("", "/", "/home").permitAll()
                 .requestMatchers("/contact/**").permitAll()

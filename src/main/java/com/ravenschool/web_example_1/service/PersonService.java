@@ -33,6 +33,15 @@ public class PersonService {
         return _personRepository.getByEmail(email);
     }
 
+    public Person getUserId(int id) {
+        Person person = null;
+        Optional<Person> optionalPerson = _personRepository.findById(id);
+        if (optionalPerson.isPresent())
+            person = optionalPerson.get();
+
+        return person;
+    }
+
     public int  updateUser(Person person) {
         Person savePerson = _personRepository.save(person);
         return savePerson.getPersonId();
