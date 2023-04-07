@@ -12,6 +12,8 @@ select *
 from address
 where address_id = 1;
 
-select * from class;
+select * from person_courses;
+select * from courses;
+
 
 

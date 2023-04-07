@@ -23,7 +23,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests()
                 .requestMatchers("/dashboard").authenticated()
                 .requestMatchers("/profile/**").authenticated()
-                .requestMatchers("/contact/displayMessages").hasRole("ADMIN")
+                .requestMatchers("/contact/displayMessages/**").hasRole("ADMIN")
                 .requestMatchers("/contact/closeMsg/**").hasRole("ADMIN")
                 .requestMatchers("/admin/**").hasRole("ADMIN")
                 .requestMatchers("/student/**").hasRole("STUDENT")

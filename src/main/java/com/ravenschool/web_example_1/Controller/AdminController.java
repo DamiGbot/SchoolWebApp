@@ -17,6 +17,8 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
@@ -33,7 +35,10 @@ public class AdminController {
 
     @GetMapping(value = {"/courses"})
     public ModelAndView courses() {
-        List<Course> courses = _courseService.getAllCourses();
+        List<Course> courses = _courseService.getAllCourses(
+                new ArrayList<>(Arrays.asList("name", "courseId")),
+                new ArrayList<>(Arrays.asList(false, true))
+        );
         ModelAndView modelAndView = new ModelAndView("courses_secure.html");
         modelAndView.addObject("courses", courses);
         modelAndView.addObject("course", new Course());

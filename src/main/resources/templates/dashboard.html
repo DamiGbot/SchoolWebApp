@@ -72,19 +72,19 @@ Author URL: http://w3layouts.com
                 </div>
 
                 <div class="col-sm-6 col-lg-3" sec:authorize="hasRole('ROLE_ADMIN')">
-                    <a th:href="@{/contact/displayMessages}">
-                    <div class="overview-item overview-item--c3">
-                        <div class="overview__inner">
-                            <div class="overview-box clearfix">
-                                <div class="icon">
-                                    <i class="fas fa-envelope-open-text"></i>
-                                </div>
-                                <div class="text">
-                                    <h2>Messages</h2>
+                    <a th:href="@{/contact/displayMessages/page/1?sortField=name&sortDir=desc}">
+                        <div class="overview-item overview-item--c3">
+                            <div class="overview__inner">
+                                <div class="overview-box clearfix">
+                                    <div class="icon">
+                                        <i class="fas fa-envelope-open-text"></i>
+                                    </div>
+                                    <div class="text">
+                                        <h2>Messages</h2>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
                     </a>
                 </div>
 

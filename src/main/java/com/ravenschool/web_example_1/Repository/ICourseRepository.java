@@ -7,4 +7,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ICourseRepository extends JpaRepository<Course, Integer> {
     Course findByName(String name);
+
+    // Static Sorting 
+//    List<Course> findByOrderByName();
+//    List<Course> findByOrderByNameDesc();
 }

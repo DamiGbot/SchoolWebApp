@@ -5,8 +5,10 @@ import com.ravenschool.web_example_1.Model.Person;
 import com.ravenschool.web_example_1.Repository.ICourseRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -19,8 +21,18 @@ public class CourseService {
     private final ICourseRepository _courseRepository;
     private final PersonService _personService;
 
-    public List<Course> getAllCourses() {
-        List<Course> courses = _courseRepository.findAll();
+    public List<Course> getAllCourses(List<String> params, List<Boolean> direction) {
+        List<Sort.Order> orders = new ArrayList<>();
+
+        for (var idx = 0; idx < params.size(); idx++) {
+            Sort.Direction sortDirection = Sort.Direction.ASC;
+            if (direction.get(idx))
+                sortDirection = Sort.Direction.DESC;
+
+            Sort.Order newOrder = new Sort.Order(sortDirection, params.get(idx));
+            orders.add(newOrder);
+        }
+        List<Course> courses =  _courseRepository.findAll(Sort.by(orders));
         // Add Extra Logic to be performed before returning the list.
         return courses;
     }
