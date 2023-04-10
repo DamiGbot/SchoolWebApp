@@ -2,7 +2,9 @@ show databases;
 
 use eazyschool;
 
-SELECT * from contact_msg;
+SELECT * 
+from contact_msg
+where status = "Close";
 
 show tables;
 

@@ -9,6 +9,12 @@ import org.hibernate.annotations.GenericGenerator;
 @Data
 @Entity
 @Table(name = "contact_msg")
+@NamedNativeQueries({
+        @NamedNativeQuery(
+                name = "Contact.updateStatusById",
+                query = "update contact_msg set status = :status, updated_at = Now(), updated_by = 'admin' where contact_id = :id"
+        )
+})
 public class Contact extends BasePerson {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
