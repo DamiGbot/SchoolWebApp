@@ -19,6 +19,7 @@ public class SecurityConfig {
 
         http.csrf().ignoringRequestMatchers("/contact/saveMsg")
                 .ignoringRequestMatchers("/public/**")
+                .ignoringRequestMatchers("/api/**")
                 .and()
                 .authorizeHttpRequests()
                 .requestMatchers("/dashboard").authenticated()
@@ -27,6 +28,7 @@ public class SecurityConfig {
                 .requestMatchers("/contact/closeMsg/**").hasRole("ADMIN")
                 .requestMatchers("/admin/**").hasRole("ADMIN")
                 .requestMatchers("/student/**").hasRole("STUDENT")
+                .requestMatchers("/api/**").authenticated()
                 .requestMatchers("/assets/**").permitAll()
                 .requestMatchers("", "/", "/home").permitAll()
                 .requestMatchers("/contact/**").permitAll()
