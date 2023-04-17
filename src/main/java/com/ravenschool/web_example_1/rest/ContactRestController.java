@@ -20,6 +20,7 @@ import java.util.Optional;
 @Slf4j
 @RequestMapping("/api/v1/contact")
 @AllArgsConstructor
+@CrossOrigin(origins = "*")
 public class ContactRestController {
 
     private final IContactRepository _IContactRepository;

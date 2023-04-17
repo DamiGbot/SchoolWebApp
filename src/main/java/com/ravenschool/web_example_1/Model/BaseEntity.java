@@ -1,5 +1,6 @@
 package com.ravenschool.web_example_1.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
@@ -15,6 +16,7 @@ import java.time.LocalDateTime;
 @Data
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
+@JsonIgnoreProperties(value = {"updated_at", "updated_by", "created_at", "created_by"})
 public class BaseEntity {
 
     @CreatedBy
