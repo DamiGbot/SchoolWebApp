@@ -23,7 +23,7 @@ Welcome to SchoolwebPage, a robust and user-friendly school management system de
 
 1. Clone the repository from GitHub:
     ```bash
-    git clone [URL](https://github.com/DamiGbot/SchoolWebPage.git)
+    git clone https://github.com/DamiGbot/SchoolWebPage.git
     ```
     _Press enter to start the clone process._
 
