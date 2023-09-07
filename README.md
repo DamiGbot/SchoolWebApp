@@ -1,6 +1,6 @@
-# SchoolwebPage: A Comprehensive School Management System
+# SchoolwebApp: A Comprehensive School Management System
 
-Welcome to SchoolwebPage, a robust and user-friendly school management system designed using Java's Spring Boot, Maven, and backed by MySQL. Built with N-Tier Architecture, our goal is to provide schools with a seamless way to manage their day-to-day operations.
+Welcome to SchoolwebApp, a robust and user-friendly school management system designed using Java's Spring Boot, Maven, and backed by MySQL. Built with N-Tier Architecture, our goal is to provide schools with a seamless way to manage their day-to-day operations.
 
 ## Features
 
